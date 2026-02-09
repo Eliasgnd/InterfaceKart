@@ -1,10 +1,59 @@
 QWidget {
-    background: #f6f8fb;
-    color: #12263a;
-    font-family: "Segoe UI", sans-serif;
+    background-color: #eef2f7;
+    color: #1d2939;
+    font-family: "Segoe UI";
+    font-size: 19px;
 }
+
+QMainWindow, QWidget#RootWindow {
+    background-color: #eef2f7;
+}
+
+QWidget#TopStatusBar, QWidget#BottomNavBar, QWidget#AlertBanner {
+    background-color: #ffffff;
+    border-radius: 14px;
+}
+
+QGroupBox#PanelCard, QFrame#MapPlaceholder, QFrame#CameraPlaceholder {
+    background-color: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #d5dce8;
+    padding: 10px;
+}
+
 QPushButton {
-    background: #dce8ff;
-    border-radius: 6px;
-    padding: 6px 10px;
+    background-color: #d8e6ff;
+    border: 1px solid #bfd3f5;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 20px;
+    min-height: 44px;
+}
+
+QPushButton:pressed {
+    background-color: #bcd4fb;
+}
+
+QLabel#HeroSpeed {
+    font-size: 74px;
+    font-weight: 700;
+}
+
+QWidget#AlertBanner[alertLevel="warning"] {
+    background-color: #ffe9b3;
+}
+
+QWidget#AlertBanner[alertLevel="critical"] {
+    background-color: #ffb4b4;
+    color: #550000;
+    font-weight: 700;
+}
+
+QLabel[linkState="connected"] {
+    color: #157a3e;
+}
+
+QLabel[linkState="disconnected"] {
+    color: #bb1f1f;
+    font-weight: 700;
 }

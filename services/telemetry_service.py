@@ -2,22 +2,20 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from PySide6.QtCore import QObject, Signal
 
 from domain.telemetry_model import TelemetryFrame
 
 
-class TelemetryService(ABC):
-    """Base interface for telemetry providers."""
+class TelemetryService(QObject):
+    """Abstract telemetry provider interface."""
 
-    @abstractmethod
-    def start_stream(self) -> None:
-        """Start telemetry data collection."""
+    telemetry_updated = Signal(object)
 
-    @abstractmethod
-    def stop_stream(self) -> None:
-        """Stop telemetry data collection."""
+    def start(self) -> None:
+        """Start telemetry streaming."""
+        raise NotImplementedError
 
-    @abstractmethod
-    def latest_frame(self) -> TelemetryFrame:
-        """Return the latest telemetry snapshot."""
+    def stop(self) -> None:
+        """Stop telemetry streaming."""
+        raise NotImplementedError
