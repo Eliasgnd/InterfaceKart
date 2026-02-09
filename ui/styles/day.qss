@@ -1,42 +1,91 @@
 QWidget {
-    background-color: #eef2f7;
-    color: #1d2939;
+    background-color: #eef3fb;
+    color: #1c2738;
     font-family: "Segoe UI";
-    font-size: 19px;
+    font-size: 18px;
 }
 
 QMainWindow, QWidget#RootWindow {
-    background-color: #eef2f7;
+    background-color: #eef3fb;
 }
 
-QWidget#TopStatusBar, QWidget#BottomNavBar, QWidget#AlertBanner {
+QWidget#TopStatusBar, QWidget#BottomNavBar, QWidget#AlertBanner,
+QFrame#HeroCard, QFrame#InfoCard {
     background-color: #ffffff;
-    border-radius: 14px;
+    border: 1px solid #d8e0ee;
+    border-radius: 16px;
 }
 
 QGroupBox#PanelCard, QFrame#MapPlaceholder, QFrame#CameraPlaceholder {
     background-color: #ffffff;
-    border-radius: 14px;
+    border-radius: 16px;
     border: 1px solid #d5dce8;
-    padding: 10px;
+    padding: 12px;
 }
 
 QPushButton {
-    background-color: #d8e6ff;
+    background-color: #dfe9ff;
     border: 1px solid #bfd3f5;
     border-radius: 14px;
-    padding: 12px 14px;
-    font-size: 20px;
-    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 18px;
+    min-height: 42px;
+}
+
+QPushButton:hover {
+    background-color: #cedfff;
 }
 
 QPushButton:pressed {
     background-color: #bcd4fb;
 }
 
-QLabel#HeroSpeed {
-    font-size: 74px;
+QPushButton#PrimaryButton {
+    background-color: #3550cc;
+    border: 1px solid #6b82f2;
+    color: #f5f8ff;
+    font-weight: 600;
+}
+
+QPushButton#NavButton[active="true"] {
+    background-color: #3350c8;
+    border: 1px solid #6c85f2;
+    color: #f5f8ff;
+    font-weight: 600;
+}
+
+QPushButton#RoundControl {
+    min-width: 44px;
+    max-width: 44px;
+    min-height: 44px;
+    border-radius: 22px;
+    font-size: 24px;
     font-weight: 700;
+}
+
+QLabel#HeroSpeed {
+    font-size: 84px;
+    font-weight: 700;
+}
+
+QLabel#HeroSpeedUnit {
+    font-size: 28px;
+    font-weight: 600;
+    color: #5a6780;
+}
+
+QLabel#MetricValue {
+    font-size: 30px;
+    font-weight: 650;
+}
+
+QLabel#PlaceholderTitle {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+QLabel#PlaceholderSubtitle {
+    color: #5a6780;
 }
 
 QWidget#AlertBanner[alertLevel="warning"] {

@@ -1,7 +1,7 @@
 """Navigation placeholder page."""
 
-from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtWidgets import QFrame, QGridLayout, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
 
 from domain.telemetry_model import TelemetryFrame
 
@@ -26,28 +26,45 @@ class NavigationPage(QWidget):
 
     def _build_ui(self) -> None:
         root = QVBoxLayout(self)
+        root.setContentsMargins(12, 8, 12, 8)
+        root.setSpacing(12)
+
         map_placeholder = QFrame()
         map_placeholder.setObjectName("MapPlaceholder")
         map_layout = QVBoxLayout(map_placeholder)
         map_layout.addStretch(1)
-        map_layout.addWidget(QLabel("Map will be here (OSM)"), 0)
+        title = QLabel("Map view")
+        title.setObjectName("PlaceholderTitle")
+        subtitle = QLabel("OSM/QtLocation integration ready")
+        subtitle.setObjectName("PlaceholderSubtitle")
+        map_layout.addWidget(title, alignment=Qt.AlignHCenter)
+        map_layout.addWidget(subtitle, alignment=Qt.AlignHCenter)
         map_layout.addStretch(1)
 
-        root.addWidget(map_placeholder, 1)
-        root.addWidget(self._latlon)
-        root.addWidget(self._heading)
-        root.addWidget(self._fix)
+        info_panel = QFrame()
+        info_panel.setObjectName("InfoCard")
+        info_layout = QGridLayout(info_panel)
+        info_layout.addWidget(self._latlon, 0, 0)
+        info_layout.addWidget(self._heading, 0, 1)
+        info_layout.addWidget(self._fix, 1, 0)
+        info_layout.addWidget(self._zoom_label, 1, 1)
 
         controls = QHBoxLayout()
-        zoom_in = QPushButton("Zoom +")
-        zoom_out = QPushButton("Zoom -")
+        zoom_in = QPushButton("+")
+        zoom_out = QPushButton("-")
+        zoom_in.setObjectName("RoundControl")
+        zoom_out.setObjectName("RoundControl")
         zoom_in.clicked.connect(lambda: self._set_zoom(self._zoom + 1))
         zoom_out.clicked.connect(lambda: self._set_zoom(self._zoom - 1))
         self._follow_button.clicked.connect(self._toggle_follow)
         controls.addWidget(self._follow_button)
+        controls.addStretch(1)
+        controls.addWidget(QLabel("Zoom"))
         controls.addWidget(zoom_out)
         controls.addWidget(zoom_in)
-        controls.addWidget(self._zoom_label)
+
+        root.addWidget(map_placeholder, 1)
+        root.addWidget(info_panel)
         root.addLayout(controls)
 
     def _toggle_follow(self) -> None:
@@ -61,7 +78,7 @@ class NavigationPage(QWidget):
         self.zoom_changed.emit(self._zoom)
 
     def _refresh_controls(self) -> None:
-        self._follow_button.setText("Center on me: ON" if self._follow else "Center on me: OFF")
+        self._follow_button.setText("Follow kart: ON" if self._follow else "Follow kart: OFF")
         self._zoom_label.setText(f"Zoom: {self._zoom}")
 
     def on_telemetry(self, frame: TelemetryFrame) -> None:
