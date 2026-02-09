@@ -1,4 +1,4 @@
-"""Domain models for telemetry frames and alerts."""
+"""Modèles simples de l'application."""
 
 from __future__ import annotations
 
@@ -7,25 +7,40 @@ from datetime import datetime
 from enum import Enum
 
 
-class AlertLevel(str, Enum):
-    """Severity for alert presentation."""
+class ThemeMode(str, Enum):
+    DAY = "day"
+    NIGHT = "night"
 
+
+class PageId(str, Enum):
+    HOME = "home"
+    NAVIGATION = "navigation"
+    CAMERA = "camera"
+    SETTINGS = "settings"
+
+
+@dataclass(slots=True)
+class AppSettings:
+    theme_mode: ThemeMode = ThemeMode.NIGHT
+    brightness: int = 80
+    default_page: PageId = PageId.HOME
+    map_follow: bool = True
+    map_zoom: int = 12
+
+
+class AlertLevel(str, Enum):
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
 
 
 class ConnectivityState(str, Enum):
-    """Link state of telemetry source."""
-
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
 
 
 class GpsFixState(str, Enum):
-    """GPS lock quality."""
-
     NO_FIX = "no_fix"
     FIX_2D = "fix_2d"
     FIX_3D = "fix_3d"
@@ -33,8 +48,6 @@ class GpsFixState(str, Enum):
 
 @dataclass(slots=True)
 class GpsData:
-    """GPS position and heading details."""
-
     latitude: float = 0.0
     longitude: float = 0.0
     heading_deg: float = 0.0
@@ -43,8 +56,6 @@ class GpsData:
 
 @dataclass(slots=True)
 class Alert:
-    """Alert event carried inside telemetry frame."""
-
     alert_id: str
     level: AlertLevel
     message: str
@@ -54,8 +65,6 @@ class Alert:
 
 @dataclass(slots=True)
 class TelemetryFrame:
-    """Snapshot for UI updates."""
-
     speed_kmh: float = 0.0
     battery_percent: int = 100
     reverse: bool = False
