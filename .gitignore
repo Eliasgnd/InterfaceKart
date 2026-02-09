@@ -155,3 +155,10 @@ __marimo__/
 # Dossiers de build Qt (souvent générés par Qt Creator)
 build-*/
 cmake-build-*/
+
+# Qt Creator project settings
+.qtcreator/
+
+# Virtual environments (in case Qt Creator stored one here)
+**/*venv*/
+**/.venv/
