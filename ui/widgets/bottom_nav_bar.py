@@ -1,37 +1,33 @@
 """Bottom navigation bar widget."""
 
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QHBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QPushButton, QWidget
 
-from ui.widgets.icon_button import IconButton
+from domain.settings_model import PageId
 
 
 class BottomNavBar(QWidget):
-    """Provide page navigation buttons."""
+    """Touch-first bottom navigation with large buttons."""
 
-    page_requested = Signal(str)
+    page_selected = Signal(object)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
+        self.setObjectName("BottomNavBar")
         self._setup_ui()
-        self._connect_signals()
 
     def _setup_ui(self) -> None:
-        """Build navigation button row."""
-        self._home_button = IconButton("Home")
-        self._navigation_button = IconButton("Navigation")
-        self._camera_button = IconButton("Camera")
-        self._settings_button = IconButton("Settings")
-
         layout = QHBoxLayout(self)
-        layout.addWidget(self._home_button)
-        layout.addWidget(self._navigation_button)
-        layout.addWidget(self._camera_button)
-        layout.addWidget(self._settings_button)
+        layout.setContentsMargins(12, 10, 12, 10)
+        layout.setSpacing(12)
 
-    def _connect_signals(self) -> None:
-        """Forward button clicks as page request signals."""
-        self._home_button.clicked.connect(lambda: self.page_requested.emit("home"))
-        self._navigation_button.clicked.connect(lambda: self.page_requested.emit("navigation"))
-        self._camera_button.clicked.connect(lambda: self.page_requested.emit("camera"))
-        self._settings_button.clicked.connect(lambda: self.page_requested.emit("settings"))
+        self._add_button(layout, "🏠 Home", PageId.HOME)
+        self._add_button(layout, "🗺 Navigation", PageId.NAVIGATION)
+        self._add_button(layout, "📷 Camera", PageId.CAMERA)
+        self._add_button(layout, "⚙ Settings", PageId.SETTINGS)
+
+    def _add_button(self, layout: QHBoxLayout, text: str, page: PageId) -> None:
+        button = QPushButton(text)
+        button.setMinimumHeight(64)
+        button.clicked.connect(lambda: self.page_selected.emit(page))
+        layout.addWidget(button)
