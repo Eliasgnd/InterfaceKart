@@ -3,6 +3,7 @@
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QCheckBox,
+    QFrame,
     QHBoxLayout,
     QLabel,
     QPushButton,
@@ -31,22 +32,32 @@ class SettingsPage(QWidget):
 
     def _build_ui(self) -> None:
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(12, 8, 12, 8)
+        layout.setSpacing(12)
+
+        card = QFrame()
+        card.setObjectName("InfoCard")
+        card_layout = QVBoxLayout(card)
+        card_layout.addWidget(QLabel("Display & Driving Preferences"))
+        card_layout.addWidget(self._theme_toggle)
+        card_layout.addWidget(self._follow_toggle)
+
         self._brightness.setOrientation(Qt.Horizontal)
         self._brightness.setMinimum(0)
         self._brightness.setMaximum(100)
         self._brightness.valueChanged.connect(self._sync_brightness_label)
 
-        layout.addWidget(QLabel("Display & Driving Preferences"))
-        layout.addWidget(self._theme_toggle)
-        layout.addWidget(self._follow_toggle)
         row = QHBoxLayout()
         row.addWidget(QLabel("Brightness"))
         row.addWidget(self._brightness, 1)
         row.addWidget(self._brightness_value)
-        layout.addLayout(row)
+        card_layout.addLayout(row)
+
+        layout.addWidget(card)
 
         save_btn = QPushButton("Save settings")
         save_btn.setMinimumHeight(56)
+        save_btn.setObjectName("PrimaryButton")
         save_btn.clicked.connect(self._emit_save)
         layout.addWidget(save_btn)
         layout.addStretch(1)

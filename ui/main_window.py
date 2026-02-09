@@ -59,8 +59,8 @@ class MainWindow(QMainWindow):
     def _build_ui(self) -> None:
         central = QWidget(self)
         root = QVBoxLayout(central)
-        root.setContentsMargins(0, 0, 0, 0)
-        root.setSpacing(8)
+        root.setContentsMargins(16, 12, 16, 12)
+        root.setSpacing(10)
 
         home_page = HomePage()
         nav_page = NavigationPage(self._settings.map_follow, self._settings.map_zoom)
@@ -105,6 +105,7 @@ class MainWindow(QMainWindow):
         page = self._pages.get(page_id)
         if page is not None:
             self._stack.setCurrentWidget(page)
+            self._bottom_nav.set_active_page(page_id)
 
     def _on_follow_changed(self, value: bool) -> None:
         self._settings.map_follow = value
