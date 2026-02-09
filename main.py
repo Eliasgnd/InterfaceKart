@@ -1,15 +1,12 @@
-"""Application entry point for InterfaceKart."""
+"""Point d'entrée minimal pour lancer InterfaceKart."""
 
 from PySide6.QtWidgets import QApplication
 
-from services.mock_service import MockTelemetryService
-from services.settings_repository import SettingsRepository
-from services.theme_manager import ThemeManager
-from ui.main_window import MainWindow
+from services import MockTelemetryService, SettingsRepository, ThemeManager
+from ui import MainWindow
 
 
 def main() -> int:
-    """Create app, load settings, show window, and start telemetry."""
     app = QApplication([])
 
     settings_repo = SettingsRepository()
